@@ -1,0 +1,31 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY n_bit_subtractor IS
+    GENERIC (n : INTEGER := 8);
+    PORT (
+        a, b : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        cin : IN STD_LOGIC;
+        s : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        cout : OUT STD_LOGIC
+    );
+END n_bit_subtractor;
+ARCHITECTURE n_bit_subtractor_arch OF n_bit_subtractor
+
+    COMPONENT full_subtractor_proxy
+        PORT (
+            a, b, cin : IN STD_LOGIC;
+            s, cout : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
+    SIGNAL wire : STD_LOGIC_VECTOR(n DOWNTO 0);
+BEGIN
+
+    wire(0) <= cin;
+    main_loop : FOR i IN 0 TO n - 1 GENERATE
+        fx : full_subtractor_proxy PORT MAP(a(i), b(i), wire(i), s(i), wire(i + 1));
+    END GENERATE;
+    cout <= wire(n);
+
+END n_bit_subtractor_arch;

@@ -1,0 +1,26 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY full_subtractor_proxy IS
+    PORT (
+        a, b, cin : IN STD_LOGIC;
+        s, cout : OUT STD_LOGIC
+    );
+
+END full_subtractor_proxy;
+ARCHITECTURE full_subtractor_proxy_arch OF full_subtractor_proxy IS
+    COMPONENT full_addar IS
+        PORT (
+            a, b, cin : IN STD_LOGIC;
+            s, cout : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
+    SIGNAL subtractor_wire : STD_LOGIC;
+
+BEGIN
+
+    subtractor_wire <= '1' XOR b;
+
+    u_sub_0 : full_addar PORT MAP(a, subtracker_wire, cin, s, cout);
+END full_subtractor_proxy_arch;
