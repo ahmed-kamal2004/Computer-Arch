@@ -1,0 +1,34 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity requirement1 is
+	port( s: IN std_logic_vector(1 DOWNTO 0);
+			a: IN std_logic_vector(7 DOWNTO 0);
+			cin: IN std_logic;
+			cout: OUT std_logic;
+			f: OUT std_logic_vector(7 DOWNTO 0));
+end requirement1;
+
+
+architecture arch_shift_left of requirement1 is
+begin
+	process(s)
+	begin
+		case s is 
+			when "00" =>
+				cout <= a(7);
+				f <= a(6 downto 0) & '0';
+			when "01" =>
+				cout <= a(7);
+				f <=  a(6 downto 0) & a(7);
+			when "10" =>
+				cout <= cin;
+				f <= a(6 downto 0) & cin;
+			when "11" =>
+				cout <= '0';
+				f <= "00000000";
+			when others =>
+				report "wallahi ma3raf ya 5al";
+		end case;
+	end process;
+end arch_shift_left;
